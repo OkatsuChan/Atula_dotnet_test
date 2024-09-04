@@ -1,7 +1,9 @@
 ﻿using Domain.Constants;
 using Domain.Entitities;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,20 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
+
+    public static class InitialiserExtensions
+    {
+        public static async Task InitialiseDatabaseAsync(this WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+
+            var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+
+            await initialiser.InitialiseAsync();
+
+            await initialiser.SeedAsync();
+        }
+    }
 
     public class ApplicationDbContextInitialiser
     {
@@ -68,7 +84,13 @@ namespace Infrastructure.Data
             }
 
             // Default users
-            var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+            var administrator = new ApplicationUser 
+            { 
+                UserName = "administrator@localhost", 
+                Email = "administrator@localhost" ,
+                FirstName = "TestFirstName",
+                LastName = "TestLastName",
+            };
 
             if (_userManager.Users.All(u => u.UserName != administrator.UserName))
             {
