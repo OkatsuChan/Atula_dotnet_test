@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Categories\Commands\DeleteCategory\" />
-    <Folder Include="Categories\Commands\UpdateCategory\" />
     <Folder Include="User\Queries\" />
   </ItemGroup>
 
