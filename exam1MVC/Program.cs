@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using exam1MVC.Services;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -54,6 +56,7 @@ builder.Services.AddTransient<IIdentityService, IdentityService>();
 
 // Add IUser to Services
 builder.Services.AddScoped<IUser, CurrentUser>();
+
 
 var app = builder.Build();
 
