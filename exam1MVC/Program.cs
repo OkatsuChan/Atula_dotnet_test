@@ -28,28 +28,32 @@ builder.Services.AddMediatR(cfg => {
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 });
 
-
+// Add ApplicationDbContext to Services
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
 {
+    // Set connectionString
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
     options.UseSqlServer(connectionString);
 });
 
 
+// Add ApplicationDbContext to Services
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
+// Add ApplicationDbContextInitialiser to Services
 builder.Services.AddScoped<ApplicationDbContextInitialiser>();
 
+// Add AddDefaultIdentity to Services
 builder.Services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Add IIdentityService to Services
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 
+// Add IUser to Services
 builder.Services.AddScoped<IUser, CurrentUser>();
-
-
 
 var app = builder.Build();
 
