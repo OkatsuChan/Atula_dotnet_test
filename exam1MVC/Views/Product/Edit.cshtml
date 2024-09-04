@@ -1,4 +1,4 @@
-﻿@model Domain.Entitities.Product
+﻿@model Application.Products.Queries.GetProductByIdById.GetProductByIdQueryResponseDTO
 
 @{
     ViewData["Title"] = "Edit Product";
@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
         <label asp-for="Categories" class="control-label">Categories</label>
-        @Html.ListBoxFor(model => model.Categories, (MultiSelectList)ViewBag.Categories, new { @class = "form-control" })
+        @* @Html.ListBoxFor(model => model.Categories, (MultiSelectList)ViewBag.Categories, new { @class = "form-control" }) *@
     </div>
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Products.Commands.UpdateProduct;
 
-public record UpdateProductCommand(int Id, string? Sku, string Name) : IRequest;
+public record UpdateProductCommand(int Id, string? Sku, string Name , List<Category> Categories) : IRequest;
 
 
 public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
@@ -30,6 +30,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
         // Update Data of Product
         entity.Sku = request.Sku;
         entity.Name = request.Name;
+        entity.Categories = request.Categories;
 
         // Commit Changes to DB
         await _context.SaveChangesAsync(cancellationToken);
