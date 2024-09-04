@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Categories.Commands.UpdateCategory;
 
-public record UpdateCategoryCommand(int Id, string? Sku, string Name) : IRequest;
+public record UpdateCategoryCommand(int Id, string Name) : IRequest;
 
 
 public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand>
