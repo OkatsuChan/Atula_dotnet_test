@@ -23,10 +23,16 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 // Add MediatR to Services
-builder.Services.AddMediatR(cfg => {
-    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-});
+// reference: https://stackoverflow.com/questions/75848218/no-service-for-type-mediatr-irequesthandler-has-been-registred-net-6
+foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+{
+    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+
+    builder.Services.AddMediatR(cfg => {
+        cfg.RegisterServicesFromAssembly(assembly);
+        cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+    });
+}
 
 // Add ApplicationDbContext to Services
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
