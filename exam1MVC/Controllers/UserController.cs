@@ -1,10 +1,11 @@
 ﻿using Application.Common.Interfaces;
-using Application.User.Commands.LoginUser;
+using Application.User.Queries.LoginUser;
 using exam1MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Principal;
 
 namespace exam1MVC.Controllers
@@ -20,31 +21,33 @@ namespace exam1MVC.Controllers
 
         public IActionResult Login()
         {
+
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginUserCommand request)
         {
-            if (ModelState.IsValid)
+            //// Set Email and Password
+            //request.Email = model.Email; //administrator@localhost
+            //request.Password = model.Password; // Administrator1!
+
+            try
             {
-                var request = new LoginUserCommand();
-
-                // Set Email and Password
-                request.Email = model.Email; //administrator@localhost
-                request.Password = model.Password; // Administrator1!
-
                 var response = await this.sender.Send(request);
-                
+
                 if (response.Succeeded)
                 {
                     return RedirectToAction(actionName: "Index", controllerName: "Category");
                 }
-
-                //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Invalid login attempt. {ex.Message}";
             }
 
-            return View(model);
+            return View();
         }
 
 

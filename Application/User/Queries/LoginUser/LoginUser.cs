@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.Commands.LoginUser;
+namespace Application.User.Queries.LoginUser;
 
 public record LoginUserCommand : IRequest<Result>
 {
