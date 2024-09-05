@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\User\**" />
-    <Content Remove="Views\User\**" />
-    <EmbeddedResource Remove="Views\User\**" />
-    <None Remove="Views\User\**" />
+    <Content Remove="Views\User\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\User\Login1.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\User\Login1.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +23,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,4 @@
 using Application.Common.Interfaces;
-using exam1MVC.Behaviours;
 using FluentValidation;
 using Infrastructure.Data;
 using Infrastructure.Identity;
@@ -13,26 +12,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using exam1MVC.Services;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add FluenValidation to Services
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-// Add MediatR to Services
-// reference: https://stackoverflow.com/questions/75848218/no-service-for-type-mediatr-irequesthandler-has-been-registred-net-6
-foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-{
-    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
-
-    builder.Services.AddMediatR(cfg => {
-        cfg.RegisterServicesFromAssembly(assembly);
-        cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-    });
-}
+// AddApplicationServices
+builder.Services.AddApplicationServices();
 
 // Add ApplicationDbContext to Services
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
@@ -88,7 +76,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Login}/{id?}");
 
 app.Run();
 

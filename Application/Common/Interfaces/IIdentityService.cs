@@ -21,5 +21,8 @@ namespace Application.Common.Interfaces
         Task<(Result Result, string UserId)> CreateUserAsync(CreateUserCommand createUserCommand);
 
         Task<Result> DeleteUserAsync(string userId);
+
+        Task<Result> LoginAsync(string? email, string? password);
+
     }
 }

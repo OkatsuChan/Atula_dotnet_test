@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Constants;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Infrastructure.Identity
 {
@@ -17,14 +19,17 @@ namespace Infrastructure.Identity
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
         private readonly IAuthorizationService _authorizationService;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public IdentityService(
            UserManager<ApplicationUser> userManager,
            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
+           SignInManager<ApplicationUser> signInManager,
            IAuthorizationService authorizationService)
         {
             _userManager = userManager;
             _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
+            _signInManager = signInManager;
             _authorizationService = authorizationService;
         }
         public async Task<bool> AuthorizeAsync(string userId, string policyName)
@@ -82,6 +87,26 @@ namespace Infrastructure.Identity
             var user = await _userManager.FindByIdAsync(userId);
 
             return user != null && await _userManager.IsInRoleAsync(user, role);
+        }
+
+        public async Task<Result> LoginAsync(string? email, string? password)
+        {
+            var result = new Result();
+
+            var signInResult = await _signInManager.PasswordSignInAsync(email, password, false, false);
+
+            if (signInResult.Succeeded)
+            {
+                result.Succeeded = true;                
+            }
+            else
+            {
+                result.Succeeded = false;
+                result.Errors = ["Invalid User"];
+            }
+
+            return result;
+
         }
     }
 }
