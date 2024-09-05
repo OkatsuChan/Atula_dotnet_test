@@ -18,22 +18,22 @@ public record CreateUserCommand : IRequest<string>
     public string? LastName { get; init; }
 
     public string? FirstName { get; init; }
+    
+}
 
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+{
+    private readonly IIdentityService identityService;
 
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+    public CreateUserCommandHandler(IIdentityService identityService)
     {
-        private readonly IIdentityService identityService;
+        this.identityService = identityService;
+    }
+    public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    {
+        var result = await identityService.CreateUserAsync(request);
 
-        public CreateUserCommandHandler(IIdentityService identityService)
-        {
-            this.identityService = identityService;
-        }
-        public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-        {
-             var result = await identityService.CreateUserAsync(request);
-
-            return result.UserId;
-        }
+        return result.UserId;
     }
 }
 

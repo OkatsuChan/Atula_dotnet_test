@@ -14,9 +14,11 @@ namespace Application.Common.Models
             Errors = errors.ToArray();
         }
 
-        public bool Succeeded { get; init; }
+        public Result() { }
 
-        public string[] Errors { get; init; }
+        public bool Succeeded { get; set; }
+
+        public string[] Errors { get; set; }
 
         public static Result Success()
         {
