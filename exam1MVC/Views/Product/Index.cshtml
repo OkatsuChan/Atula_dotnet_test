@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Domain.Entitities.Product>
+﻿@model IEnumerable<Application.Products.Queries.GetProductByIdById.GetProductByIdQueryResponseDTO>
 
 @{
     ViewData["Title"] = "View Products";
@@ -24,15 +24,15 @@
             <tr>
                 <td>@item.Sku</td>
                 <td>@item.Name</td>
+@*                 <td>
+                     @foreach (var category in item)
+                     {
+                         @category.Name <br />
+                     }
+                </td> *@
                 <td>
-                    @foreach (var category in item.Categories)
-                    {
-                        @category.Name <br />
-                    }
-                </td>
                 <td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
                 </td>
                 <td>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>

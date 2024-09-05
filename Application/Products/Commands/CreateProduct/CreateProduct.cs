@@ -15,6 +15,8 @@ public record CreateProductCommand : IRequest<int>
     public string? Sku { get; set; }
 
     public string? Name { get; set; }
+
+    public List<Category> Categories{ get; set; }
 }
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
@@ -33,6 +35,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         // Set Data to Product
         entity.Sku = request.Sku;
         entity.Name = request.Name;
+        entity.Categories = request.Categories;
 
         // Add to Products
         _context.Products.Add(entity);

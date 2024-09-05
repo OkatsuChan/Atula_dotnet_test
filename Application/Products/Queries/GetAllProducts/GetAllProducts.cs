@@ -38,6 +38,7 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQuery, Lis
             getProductByIdQueryResponseDTO.Id = entity.Id;
             getProductByIdQueryResponseDTO.Sku = entity.Sku;
             getProductByIdQueryResponseDTO.Name = entity.Name;
+            getProductByIdQueryResponseDTO.Categories = entity.Categories;
 
             // Add to Record List
             recordList.Add(getProductByIdQueryResponseDTO);

@@ -7,17 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Category\**" />
-    <Compile Remove="Views\Product\**" />
     <Compile Remove="Views\User\**" />
-    <Content Remove="Views\Category\**" />
-    <Content Remove="Views\Product\**" />
     <Content Remove="Views\User\**" />
-    <EmbeddedResource Remove="Views\Category\**" />
-    <EmbeddedResource Remove="Views\Product\**" />
     <EmbeddedResource Remove="Views\User\**" />
-    <None Remove="Views\Category\**" />
-    <None Remove="Views\Product\**" />
     <None Remove="Views\User\**" />
   </ItemGroup>
 

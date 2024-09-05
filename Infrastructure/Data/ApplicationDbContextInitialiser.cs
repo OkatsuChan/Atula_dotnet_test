@@ -106,15 +106,27 @@ namespace Infrastructure.Data
             if (!_context.Products.Any())
             {
                 _context.Products.Add(new Product
+                    {
+                        Sku = "SKUA",
+                        Name = "Lorem Table",
+                        Categories= 
+                    {
+                        new Category { Name = "Table" },
+                        new Category { Name = "Chair" },
+                        new Category { Name = "Sofa" },
+                    }
+                });
+
+                _context.Products.Add(new Product
                 {
-                    Sku = "SKUA",
-                    Name = "Lorem Table",
-                    Categories= 
-                {
-                    new Category { Name = "Table" },
-                    new Category { Name = "Chair" },
-                    new Category { Name = "Sofa" },
-                }
+                    Sku = "SKUB",
+                    Name = "Ipsum Table",
+                    Categories =
+                    {
+                        new Category { Name = "Table" },
+                        new Category { Name = "Chair" },
+                        new Category { Name = "Sofa" },
+                    }
                 });
 
                 await _context.SaveChangesAsync();

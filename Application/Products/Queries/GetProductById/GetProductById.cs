@@ -23,13 +23,15 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, G
     public async Task<GetProductByIdQueryResponseDTO> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
         // Get the target Product in Products
-        var entity = await _context.Products.FirstOrDefaultAsync(l => l.Id == request.Id);
-
+        var entityProduct = await _context.Products.FirstOrDefaultAsync(l => l.Id == request.Id);
+        var entityCategories = _context.Categories.Where(l => l.Products.Any(p => p.Id == entityProduct.Id)).ToList();
+            
        return new GetProductByIdQueryResponseDTO 
         {
-            Id = entity.Id,
-            Sku= entity.Sku,
-            Name = entity.Name,
+            Id = entityProduct.Id,
+            Sku= entityProduct.Sku,
+            Name = entityProduct.Name,
+            Categories = entityCategories,
         };
     }
 }
